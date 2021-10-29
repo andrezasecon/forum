@@ -1,6 +1,7 @@
 package br.com.andrezasecon.forum.controllers;
 
 import br.com.andrezasecon.forum.domain.Topico;
+import br.com.andrezasecon.forum.dto.AtualizacaoTopicoForm;
 import br.com.andrezasecon.forum.dto.DetalhesDoTopicoDto;
 import br.com.andrezasecon.forum.dto.TopicoDto;
 import br.com.andrezasecon.forum.dto.TopicoForm;
@@ -8,6 +9,7 @@ import br.com.andrezasecon.forum.repositories.CursoRepository;
 import br.com.andrezasecon.forum.repositories.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -40,6 +42,7 @@ public class TopicosController implements Serializable {
 
     @PostMapping  // o @RequestBody avisa ao spring que os dados serão enviados no corpo da mensagem
     // passando o UriComponents como parametro, ele já pega o caminho do método
+    @Transactional // commita a operação
     public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
         Topico topico = topicoForm.convert(cursoRepository);
         topicoRepository.save(topico);
@@ -54,6 +57,20 @@ public class TopicosController implements Serializable {
     public DetalhesDoTopicoDto detail(@PathVariable Long id){
         Topico topico = topicoRepository.getById(id);
         return new DetalhesDoTopicoDto(topico);
+    }
+
+    @PutMapping("/{id}")
+    @Transactional // faz o JPA commitar a transação no banco de dados
+    public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm form){
+       Topico topico = form.atualizar(id, topicoRepository);
+       return ResponseEntity.ok(new TopicoDto(topico));
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public ResponseEntity<?> remover(@PathVariable Long id){
+        topicoRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 
 }
