@@ -21,4 +21,7 @@ public class Curso {
 		this.categoria = categoria;
 	}
 
+	public Curso(Curso nomeCurso) {
+		this.nome = nomeCurso.getNome();
+	}
 }
