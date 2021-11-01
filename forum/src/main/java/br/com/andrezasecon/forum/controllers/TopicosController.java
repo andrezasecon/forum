@@ -34,24 +34,23 @@ public class TopicosController implements Serializable {
     public List<TopicoDto> list(String nomeCurso){
         if(nomeCurso == null){
             List<Topico> topicos = topicoRepository.findAll(); //Busca sem parametros
-            return TopicoDto.convert(topicos);
+            return TopicoDto.converter(topicos);
         }else{
             List<Topico> topicos = topicoRepository.findByCursoNomeIgnoreCaseContaining(nomeCurso); // busca com parametros
-            return TopicoDto.convert(topicos);
+            return TopicoDto.converter(topicos);
         }
     }
 
-    @PostMapping  // o @RequestBody avisa ao spring que os dados serão enviados no corpo da mensagem
+    // o @RequestBody avisa ao spring que os dados serão enviados no corpo da mensagem
     // passando o UriComponents como parametro, ele já pega o caminho do método
     @Transactional // commita a operação
-    public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriBuilder) {
-        Topico topico = topicoForm.convert(cursoRepository);
+    @PostMapping
+    public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
+        Topico topico = form.converter(cursoRepository);
         topicoRepository.save(topico);
 
-        // Na URI adicionamos o caminho do novo recurso criado, o spring adicina esse location na cabeçalho da resposta
         URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
-        return ResponseEntity.created(uri).body(new TopicoDto(topico)); // na semantica do 201 created, na resposta temos que passar a URI
-
+        return ResponseEntity.created(uri).body(new TopicoDto(topico));
     }
 
     @GetMapping("/{id}")
