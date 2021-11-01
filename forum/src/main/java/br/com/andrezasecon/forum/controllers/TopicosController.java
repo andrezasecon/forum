@@ -8,6 +8,8 @@ import br.com.andrezasecon.forum.dto.TopicoForm;
 import br.com.andrezasecon.forum.repositories.CursoRepository;
 import br.com.andrezasecon.forum.repositories.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import java.io.Serializable;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 @RestController // Adiciona automaticamente o @ResponseBody em cada método
@@ -31,12 +32,12 @@ public class TopicosController implements Serializable {
     private CursoRepository cursoRepository;
 
     @GetMapping // por padrão os parametros serão enviados na URL
-    public List<TopicoDto> list(String nomeCurso){
+    public Page<TopicoDto> list(@RequestParam(required = false) String nomeCurso, Pageable pageable){ // @RequestParam parametros enviados na URL
         if(nomeCurso == null){
-            List<Topico> topicos = topicoRepository.findAll(); //Busca sem parametros
+            Page<Topico> topicos = topicoRepository.findAll(pageable); //Busca sem parametros
             return TopicoDto.converter(topicos);
         }else{
-            List<Topico> topicos = topicoRepository.findByCursoNomeIgnoreCaseContaining(nomeCurso); // busca com parametros
+            Page<Topico> topicos = topicoRepository.findByCursoNomeIgnoreCaseContaining(nomeCurso, pageable); // busca com parametros
             return TopicoDto.converter(topicos);
         }
     }
@@ -46,7 +47,7 @@ public class TopicosController implements Serializable {
     @Transactional // commita a operação
     @PostMapping
     public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm form, UriComponentsBuilder uriBuilder) {
-        Topico topico = form.converter(cursoRepository);
+        Topico topico = form.converter(cursoRepository); // @RequestBody parametros enviados no corpo da mensagem
         topicoRepository.save(topico);
 
         URI uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
