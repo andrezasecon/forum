@@ -8,8 +8,11 @@ import br.com.andrezasecon.forum.dto.TopicoForm;
 import br.com.andrezasecon.forum.repositories.CursoRepository;
 import br.com.andrezasecon.forum.repositories.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +35,13 @@ public class TopicosController implements Serializable {
     private CursoRepository cursoRepository;
 
     @GetMapping // por padrão os parametros serão enviados na URL
-    public Page<TopicoDto> list(@RequestParam(required = false) String nomeCurso, Pageable pageable){ // @RequestParam parametros enviados na URL
+    @Cacheable(value = "listaDeTopicos")
+    public Page<TopicoDto> list(     // PageableDefault se não vier parametros, podemos fixar um valor fixo
+            @PageableDefault(sort = "id", direction = Sort.Direction.ASC, page = 0, size = 10)
+            @RequestParam(required = false) String nomeCurso,
+            @RequestParam(value = "id", defaultValue = "0") Long id,
+            @RequestParam(value = "titulo", defaultValue = "") String titulo,
+            Pageable pageable){ // @RequestParam parametros enviados na URL
         if(nomeCurso == null){
             Page<Topico> topicos = topicoRepository.findAll(pageable); //Busca sem parametros
             return TopicoDto.converter(topicos);
