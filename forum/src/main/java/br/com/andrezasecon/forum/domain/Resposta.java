@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Table(name = "tb_resposta")
 @Data
 public class Resposta {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

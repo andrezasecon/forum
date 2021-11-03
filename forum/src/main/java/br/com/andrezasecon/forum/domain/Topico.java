@@ -8,6 +8,7 @@ import java.util.List;
 @Entity
 @Table(name = "tb_topico")
 public class Topico {
+	private static final long serialVersionUID = 1L;
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
