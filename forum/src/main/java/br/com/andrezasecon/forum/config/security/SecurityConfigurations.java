@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity // habilita security na aplicação
@@ -29,8 +30,11 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/topicos").permitAll()
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
+                .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated() // qualquer outro verbo http deve estar autenticado
-                .and().formLogin(); // formulario de login do spring
+                //.and().formLogin(); // formulario de login do spring
+                .and().csrf().disable() // desabilita o cross site request forgery (montagem de sessão)
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); // avisa ao spring para não gerar sessão de autenticação
 
     }
 
