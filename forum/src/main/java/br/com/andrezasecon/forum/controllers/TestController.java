@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/")
     @ResponseBody
     public String hello(){
-        return "Esta funfando, testando devtools, toma no cúuuuu!!!";
+
+        return "Esta funfando, autenticação com SpringSecurity!!!";
     }
 }

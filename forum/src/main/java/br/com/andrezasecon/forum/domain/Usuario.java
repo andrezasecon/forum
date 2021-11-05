@@ -1,6 +1,5 @@
 package br.com.andrezasecon.forum.domain;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,7 +10,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "tb_user")
-@Data
 public class Usuario implements UserDetails {
 	private static final long serialVersionUID = 1L;
 
