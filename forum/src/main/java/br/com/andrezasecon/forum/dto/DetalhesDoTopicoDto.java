@@ -2,13 +2,14 @@ package br.com.andrezasecon.forum.dto;
 
 import br.com.andrezasecon.forum.domain.StatusTopico;
 import br.com.andrezasecon.forum.domain.Topico;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Getter
 public class DetalhesDoTopicoDto {
 
     private Long id;
@@ -30,31 +31,4 @@ public class DetalhesDoTopicoDto {
         this.respostas.addAll(topico.getRespostas().stream().map(RespostaDto::new).collect(Collectors.toList()));
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getMensagem() {
-        return mensagem;
-    }
-
-    public LocalDateTime getDataCriacao() {
-        return dataCriacao;
-    }
-
-    public String getNomeAutor() {
-        return nomeAutor;
-    }
-
-    public StatusTopico getStatus() {
-        return status;
-    }
-
-    public List<RespostaDto> getRespostas() {
-        return respostas;
-    }
 }

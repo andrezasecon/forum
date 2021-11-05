@@ -1,10 +1,10 @@
 package br.com.andrezasecon.forum.controllers;
 
 import br.com.andrezasecon.forum.domain.Topico;
-import br.com.andrezasecon.forum.form.AtualizacaoTopicoForm;
+import br.com.andrezasecon.forum.dto.AtualizacaoTopicoForm;
 import br.com.andrezasecon.forum.dto.DetalhesDoTopicoDto;
 import br.com.andrezasecon.forum.dto.TopicoDto;
-import br.com.andrezasecon.forum.form.TopicoForm;
+import br.com.andrezasecon.forum.dto.TopicoForm;
 import br.com.andrezasecon.forum.repositories.CursoRepository;
 import br.com.andrezasecon.forum.repositories.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package br.com.andrezasecon.forum.form;
+package br.com.andrezasecon.forum.dto;
 
 import br.com.andrezasecon.forum.domain.Curso;
 import br.com.andrezasecon.forum.domain.Topico;
