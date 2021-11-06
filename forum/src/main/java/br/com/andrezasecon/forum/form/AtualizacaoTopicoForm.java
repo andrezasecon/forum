@@ -1,29 +1,30 @@
-package br.com.andrezasecon.forum.dto;
+package br.com.andrezasecon.forum.form;
 
-import br.com.andrezasecon.forum.domain.Curso;
 import br.com.andrezasecon.forum.domain.Topico;
-import br.com.andrezasecon.forum.repositories.CursoRepository;
+import br.com.andrezasecon.forum.repositories.TopicoRepository;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
-public class TopicoForm {
+public class AtualizacaoTopicoForm {
 
     @NotNull
     @NotEmpty
-    @Length(min = 5)
+    @Length(min = 5, max = 100)
     private String titulo;
 
-    @NotNull
-    @NotEmpty
-    @Length(min = 10)
+    @NotNull @NotEmpty @Length(min = 10, max = 500)
     private String mensagem;
-
-    @NotNull
-    @NotEmpty
     private String nomeCurso;
+
+    public Topico atualizar(Long id, TopicoRepository topicoRepository) {
+        Topico topico = topicoRepository.getById(id);
+        topico.setTitulo(this.titulo);
+        topico.setMensagem(this.mensagem);
+        return topico;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -48,10 +49,4 @@ public class TopicoForm {
     public void setNomeCurso(String nomeCurso) {
         this.nomeCurso = nomeCurso;
     }
-
-    public Topico converter(CursoRepository cursoRepository) {
-        Curso curso = cursoRepository.findByNome(nomeCurso);
-        return new Topico(titulo, mensagem, curso);
-    }
-
 }
