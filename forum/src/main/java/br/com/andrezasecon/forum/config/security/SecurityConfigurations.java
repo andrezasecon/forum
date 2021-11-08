@@ -48,6 +48,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/topicos").permitAll()
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                 .anyRequest().authenticated() // qualquer outro verbo http deve estar autenticado
                 //.and().formLogin(); // formulario de login do spring
                 .and().csrf().disable()
