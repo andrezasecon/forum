@@ -1,6 +1,7 @@
 package br.com.andrezasecon.forum.config.security;
 
 import br.com.andrezasecon.forum.domain.Usuario;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,7 +24,7 @@ public class TokenService {
        Date hoje = new Date();
        Date dataExpiracao = new Date(hoje.getTime() + Long.parseLong(expiration)); // soma a data de geração com a data de expiração do token
         return Jwts.builder()
-                .setIssuer("API do fórum") // quem gerou o token
+                .setIssuer("API fórum") // quem gerou o token
                 .setSubject(logado.getId().toString()) // usuário que é dono do token
                 .setIssuedAt(hoje) // quando foi gerado o token
                 .setExpiration(dataExpiracao)
@@ -35,8 +36,14 @@ public class TokenService {
         try {
             Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token);
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
+    }
+
+    // recupera o id do usuário contido no token
+    public Long getIdUsuario(String token) {
+        Claims claims = Jwts.parser().setSigningKey(this.secret).parseClaimsJws(token).getBody();
+        return Long.parseLong(claims.getSubject());
     }
 }
