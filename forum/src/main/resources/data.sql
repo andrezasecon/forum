@@ -3,7 +3,17 @@ INSERT INTO TB_USER(nome, email, senha) VALUES ('Aluno2', 'aluno2@gmail.com', '$
 INSERT INTO TB_USER(nome, email, senha) VALUES ('Aluno3', 'aluno3@gmail.com', '$2a$10$Wl2ilebZeDvPzb3eAeGbgOqVF43rYX2t8RuO.f2fxII./dWv9eO1i');
 INSERT INTO TB_USER(nome, email, senha) VALUES ('Aluno4', 'aluno4@gmail.com', '$2a$10$Wl2ilebZeDvPzb3eAeGbgOqVF43rYX2t8RuO.f2fxII./dWv9eO1i');
 INSERT INTO TB_USER(nome, email, senha) VALUES ('Aluno5', 'aluno5@gmail.com', '$2a$10$Wl2ilebZeDvPzb3eAeGbgOqVF43rYX2t8RuO.f2fxII./dWv9eO1i');
-INSERT INTO TB_USER(nome, email, senha) VALUES ('Aluno6', 'aluno6@gmail.com', '$2a$10$Wl2ilebZeDvPzb3eAeGbgOqVF43rYX2t8RuO.f2fxII./dWv9eO1i');
+INSERT INTO TB_USER(nome, email, senha) VALUES ('Moderador', 'moderador@gmail.com', '$2a$10$Wl2ilebZeDvPzb3eAeGbgOqVF43rYX2t8RuO.f2fxII./dWv9eO1i');
+
+INSERT INTO TB_PERFIL(id, nome) VALUES(1, 'ROLE_ALUNO');
+INSERT INTO TB_PERFIL(id, nome) VALUES(2, 'ROLE_MODERADOR');
+
+INSERT INTO TB_USUARIO_PERFIS(usuario_id, perfis_id) VALUES(1, 1);
+INSERT INTO TB_USUARIO_PERFIS(usuario_id, perfis_id) VALUES(2, 1);
+INSERT INTO TB_USUARIO_PERFIS(usuario_id, perfis_id) VALUES(3, 1);
+INSERT INTO TB_USUARIO_PERFIS(usuario_id, perfis_id) VALUES(4, 1);
+INSERT INTO TB_USUARIO_PERFIS(usuario_id, perfis_id) VALUES(5, 1);
+INSERT INTO TB_USUARIO_PERFIS(usuario_id, perfis_id) VALUES(6, 2);
 
 INSERT INTO TB_CURSO(nome, categoria) VALUES ('Spring Boot', 'Programação');
 INSERT INTO TB_CURSO(nome, categoria) VALUES ('HTML5', 'Front-end');

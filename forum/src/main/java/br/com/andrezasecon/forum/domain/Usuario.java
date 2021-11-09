@@ -20,6 +20,9 @@ public class Usuario implements UserDetails {
 	private String senha;
 
 	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "tb_usuario_perfis",
+			joinColumns = @JoinColumn(name = "usuario_id"),
+			inverseJoinColumns = @JoinColumn(name = "perfis_id"))
 	private List<Perfil> perfis = new ArrayList<>();
 
 	@Override

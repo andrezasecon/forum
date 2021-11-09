@@ -19,7 +19,7 @@ public class DetalhesDoTopicoDto {
     private StatusTopico status;
     private List<RespostaDto> respostas;
 
-    public DetalhesDoTopicoDto(Topico topico){
+    public DetalhesDoTopicoDto(Topico topico) {
         this.id = topico.getId();
         this.titulo = topico.getTitulo();
         this.mensagem = topico.getMensagem();
