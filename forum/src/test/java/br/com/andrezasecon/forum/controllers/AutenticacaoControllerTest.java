@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.CascadeType;
 import java.net.URI;
 
 @SpringBootTest
@@ -54,6 +55,7 @@ class AutenticacaoControllerTest {
         Usuario userTest = new Usuario();
         userTest.setEmail(email);
         userTest.setSenha(senha);
+        userTest.setNome("teste");
         em.persist(userTest);
 
         URI uri = new URI("/auth");
@@ -61,6 +63,7 @@ class AutenticacaoControllerTest {
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("email", email);
         jsonObj.put("senha", "123456");
+        jsonObj.put("nome", "teste");
         String json = jsonObj.toString();
 
         mockMvc.perform(MockMvcRequestBuilders
